@@ -1,6 +1,3 @@
-module.exports = {
-  transform: {
-    '^.+\\.mjs$': 'babel-jest',
-  },
-  testEnvironment: 'node',
-};
+    module.exports = {
+        testEnvironment: 'jest-environment-jsdom',
+    };
