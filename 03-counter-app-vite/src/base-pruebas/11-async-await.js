@@ -9,13 +9,13 @@ export const getImagen = async() => {
 
         const { url } = data.images.original;
 
-        const img = document.createElement('img');
-        img.src = url;
-        document.body.append( img );
+        return url;
 
     } catch (error) {
         // manejo del error
-        console.error(error)
+        //console.error(error);
+        // retornar un mensaje de error o un valor por defecto
+        return "no se encontro la imagen";
     }
     
     
