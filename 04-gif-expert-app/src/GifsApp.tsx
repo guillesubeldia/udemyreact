@@ -19,13 +19,39 @@ export const GifsApp = () => {
         // Aquí podríamos actualizar el estado, lanzar una nueva búsqueda, etc.
     }
 
+const handleSearch = (query: string) =>{
+  let minisculas = query.toLocaleLowerCase().trim(); //minusculas y espacios
+  if(minisculas === "") return; // Evitamos búsquedas vacías
+  // Aquí podríamos hacer una búsqueda real, por ejemplo, llamando a una API
+  setPreviousTerms(prev => {
+    if(prev.includes(minisculas)) {
+      // Si ya existe, lo movemos al inicio de la lista
+      //----------------------------------------------------
+      // Creamos un nuevo arreglo poniendo primero el término actual (`minisculas`),
+      // y luego todos los elementos anteriores excepto ese mismo término (para evitar duplicados)
+      const nuevo = [minisculas, ...prev.filter(t => t !== minisculas)];
+      console.log("Se ingresó:", minisculas, "| Array actualizado:", nuevo);
+      return nuevo.slice(0,7); // Limitamos a 8 términos previos
+    }
+    // Si no existe, lo agregamos al inicio
+    const nuevo = [minisculas, ...prev];
+    console.log("Se ingresó:", minisculas, "| Array actualizado:", nuevo);
+    return nuevo.slice(0,7); // Limitamos a 8 términos previos
+  });
+}
+
+
   return (
     <>
     { /* Componente Header - Solo recibe props del padre (flujo padre → hijo) */}
-    <CustomHeader title="Buscador Gifs" description="Descubre y comparte Gifs" />
+    <CustomHeader 
+    title="Buscador Gifs" 
+    description="Descubre y comparte Gifs" />
 
     { /* Componente SearchBar - También comunicación padre → hijo */}
-    <CustomSearchBar placeholder="Buscar Gifs"/>
+    <CustomSearchBar 
+    onQuery={ handleSearch } 
+    placeholder="Buscar Gifs"/>
 
     { /* PreviousSearches - Comunicación bidireccional
          Padre → Hijo: enviamos la lista de términos (searches)
